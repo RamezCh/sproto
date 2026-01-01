@@ -1,5 +1,4 @@
 import os
-
 import fire
 import pytorch_lightning as pl
 import torch.utils.data
@@ -252,6 +251,13 @@ def run_training(
     if not only_test:
         trainer.fit(model, dataloader["train"], dataloader["val"])
         trainer.test(dataloaders=dataloader["test"], ckpt_path="best")
+        # ---------------------------------------
+        # Save Hugging Face model
+        # ---------------------------------------
+        hf_save_path = os.path.join(save_dir, "sproto_hf")
+
+        model.model.save_pretrained(hf_save_path)
+        tokenizer.save_pretrained(hf_save_path)
     else:
         trainer.test(model=model, dataloaders=dataloader["test"])
 
