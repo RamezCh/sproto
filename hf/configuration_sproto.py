@@ -1,6 +1,6 @@
-from transformers import PretrainedConfig
+from transformers import PreTrainedConfig
 
-class SprotoConfig(PretrainedConfig):
+class SprotoConfig(PreTrainedConfig):
     model_type = "sproto"
 
     def __init__(
@@ -14,6 +14,7 @@ class SprotoConfig(PretrainedConfig):
         normalize=None,
         reduce_hidden_size=None,
         final_layer=False,
+        use_sigmoid=False,
         **kwargs
     ):
         super().__init__(**kwargs)
@@ -27,3 +28,4 @@ class SprotoConfig(PretrainedConfig):
         self.normalize = normalize
         self.reduce_hidden_size = reduce_hidden_size
         self.final_layer = final_layer
+        self.use_sigmoid = use_sigmoid

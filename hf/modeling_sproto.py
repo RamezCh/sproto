@@ -1,7 +1,8 @@
+import torch.nn as nn
 from transformers import PreTrainedModel
 from transformers.modeling_outputs import SequenceClassifierOutput
 
-from sproto.hf.configuration_sproto import SprotoConfig
+from .configuration_sproto import SprotoConfig
 from sproto.model.sproto_core import SprotoCore
 
 
