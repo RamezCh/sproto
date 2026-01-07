@@ -4,6 +4,24 @@ This repository includes source code to replicate experiments and train S-Proto.
 
 ## Usage
 
+### Plug & Play Inference
+You can easily load the model and tokenizer using Hugging Face's `transformers` library:
+
+```python
+from transformers import AutoModel, AutoTokenizer
+
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("datexis/sproto")
+model = AutoModel.from_pretrained("datexis/sproto", trust_remote_code=True)
+
+# Run inference
+inputs = tokenizer(["Example clinical text"], return_tensors="pt", padding=True, truncation=True)
+outputs = model(**inputs)
+print(outputs)
+```
+
+### Training
+
 Set up the environment with poetry
 Shell into the environment and execute in a shell:
 ```

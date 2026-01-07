@@ -2,10 +2,10 @@
 __pycache__/
 *.py[codz]
 *$py.class
-
+ckpt-epoch=573.ckpt
+output_dir/
 # C extensions
 *.so
-
 # Distribution / packaging
 .Python
 build/

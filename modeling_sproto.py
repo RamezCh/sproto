@@ -36,6 +36,17 @@ class SprotoModel(PreTrainedModel):
             num_prototypes_per_class=config.num_prototypes_per_class,
             batch_size=config.batch_size,
         )
+        
+        # Initialize weights and apply final processing
+        self.post_init()
+
+    def _init_weights(self, module):
+        """Initialize the weights"""
+        if isinstance(module, (MultiProtoModule)):
+            # MultiProtoModule handles its own initialization or is loaded from checkpoint
+            return
+        # Add other initializations if standard layers are used directly in SprotoModel
+        pass
 
     def forward(
         self,
@@ -47,6 +58,11 @@ class SprotoModel(PreTrainedModel):
         sample_ids=None,
         **kwargs,
     ):
+        if tokens is None and input_ids is not None:
+             # Create dummy tokens to prevent crash in utils.attention_mask_from_tokens
+             # The internal model expects a list of lists of strings
+             tokens = [[] for _ in range(input_ids.shape[0])]
+
         batch = {
             "input_ids": input_ids,
             "attention_masks": attention_mask,

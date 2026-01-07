@@ -55,7 +55,7 @@ config.auto_map = {
 hf_model = SprotoModel(config)
 
 # 4. Copy weights
-hf_model.module.load_state_dict(
+hf_model.load_state_dict(
     lightning_model.state_dict(),
     strict=True
 )
@@ -69,6 +69,6 @@ hf_model.config.save_pretrained(save_directory)
 
 # Save the model weights as safetensors
 model_weights = hf_model.state_dict()
-save_file(model_weights, os.path.join(save_directory, "sproto_weights.safetensors"))
+save_file(model_weights, os.path.join(save_directory, "sproto.safetensors"))
 
 print(f"Model successfully saved to {save_directory}")
