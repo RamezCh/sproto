@@ -10,15 +10,12 @@ tags:
   - interpretability
   - prototypical-networks
   - multi-label-classification
-datasets:
-  - mimic-iv
-base_model:
-  - microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
+datasets: mimic-iv
+base_model: microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
 metrics:
   - auroc
   - pr-auc
-task_categories:
-  - text-classification
+task_categories: text-classification
 model_type: sproto
 ---
 
@@ -210,71 +207,6 @@ The model was trained on the MIMIC-IV dataset, which is subject to restricted ac
 
 Use of this model must comply with all applicable data governance and ethical guidelines.
 
-## Model Card
-
-### Model Description
-
-S-Proto is a sparse prototypical neural network for extreme multi-label classification of clinical diagnoses from unstructured clinical text. It extends transformer-based encoders with a multi-prototype layer and a winner-takes-all selection mechanism to address long-tail label distributions while preserving interpretability.
-
-The model builds on PubMedBERT and introduces multiple competing prototypes per diagnosis, enabling it to capture heterogeneous disease phenotypes in clinical notes.
-
----
-
-### Model Details
-
-- **Model type**: Sparse prototypical network for multi-label classification  
-- **Base encoder**: PubMedBERT  
-- **Task**: Diagnosis prediction from clinical notes  
-- **Language**: English  
-
----
-
-### Training Data
-
-The model was trained on the MIMIC-IV dataset, which contains de-identified clinical notes from hospital admissions. Diagnoses are represented as three-digit ICD-10 codes.
-
-Key characteristics of the training data:
-
-- Extreme multi-label setting  
-- Strong long-tail label distribution  
-- Clinical admission and discharge notes  
-
-The model was additionally evaluated in a zero-shot transfer setting on the CodiEsp dataset.
-
----
-
-### Intended Use
-
-This model is intended for:
-
-- Research in clinical natural language processing  
-- Long-tail learning and extreme classification research  
-- Interpretable machine learning experiments  
-
-The model is **not intended for direct clinical use** without further validation, auditing, and regulatory approval.
-
----
-
-### Performance
-
-On MIMIC-IV diagnosis prediction, S-Proto achieves state-of-the-art performance compared to PubMedBERT and ProtoPatient, with significant improvements in PR-AUC for rare diagnoses.
-
-Performance gains transfer to unseen clinical datasets, demonstrating robustness to dataset shift.
-
----
-
-### Explainability
-
-S-Proto provides built-in explanations via:
-
-- Label-specific attention mechanisms  
-- Prototype similarity and distances  
-- Identification of phenotype-specific prototype sub-networks  
-
-Faithfulness evaluations indicate that explanations remain comparable to prior prototypical approaches despite increased model capacity.
-
----
-
 ### Limitations
 
 - Extremely rare diagnoses remain challenging  
@@ -282,24 +214,9 @@ Faithfulness evaluations indicate that explanations remain comparable to prior p
 - Winner-takes-all selection is fixed and not learned dynamically  
 - Not validated for real-world clinical deployment  
 
----
-
 ### Ethical Considerations
 
 - The model processes sensitive clinical text  
 - Predictions should always be reviewed by qualified professionals  
 - Outputs should not be used as sole evidence for clinical decisions  
-- Care must be taken to avoid reinforcing existing healthcare biases  
-
----
-
-### Citation
-
-```bibtex
-@inproceedings{figueroa2024sproto,
-  title={Boosting Long-Tail Data Classification with Sparse Prototypical Networks},
-  author={Figueroa, Alexei and Papaioannou, Jens-Michalis and Fallon, Conor and Bekiaridou, Alexandra and Bressem, Keno and Zanos, Stavros and Gers, Felix and Nejdl, Wolfgang and Löser, Alexander},
-  booktitle={Proceedings of the Conference on Empirical Methods in Natural Language Processing},
-  year={2024}
-}
-```
+- Care must be taken to avoid reinforcing existing healthcare biases
