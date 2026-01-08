@@ -3,6 +3,7 @@ __pycache__/
 *.py[codz]
 *$py.class
 ckpt-epoch=573.ckpt
+icd_10_test (1).xlsx
 output_dir/
 # C extensions
 *.so

@@ -87,6 +87,6 @@ hf_model.config.save_pretrained(save_directory)
 
 # Save the model weights as safetensors
 model_weights = hf_model.module.state_dict()
-save_file(model_weights, os.path.join(save_directory, "model.safetensors"))
+save_file(model_weights, os.path.join(save_directory, "model.safetensors"), metadata={"format": "pt"})
 
 print(f"Model successfully saved to {save_directory}")
