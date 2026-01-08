@@ -58,10 +58,6 @@ class SprotoModel(PreTrainedModel):
         sample_ids=None,
         **kwargs,
     ):
-        if tokens is None and input_ids is not None:
-             # Create dummy tokens to prevent crash in utils.attention_mask_from_tokens
-             # The internal model expects a list of lists of strings
-             tokens = [[] for _ in range(input_ids.shape[0])]
 
         batch = {
             "input_ids": input_ids,
