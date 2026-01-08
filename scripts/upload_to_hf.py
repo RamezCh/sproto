@@ -16,24 +16,33 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
             repo_type="model",
             exist_ok=True,
         )
+    allow_patterns = [
+        "modeling_sproto.py",
+        "configuration_sproto.py",
+        "config.json",
+        "model.safetensors",
+        "overview.png",
+        "LICENSE",
+        "README.md",
+    ]
+
     if dry_run:
-        print("[DRY RUN] Would upload repository contents")
+        print("[DRY RUN] The following files would be uploaded:")
+        from fnmatch import fnmatch
+        folder_path = os.path.join(os.path.dirname(__file__), "..", "hf")
+        for root, dirs, files in os.walk(folder_path):
+            for file in files:
+                rel_path = os.path.relpath(os.path.join(root, file), folder_path)
+                if any(fnmatch(rel_path, pattern) for pattern in allow_patterns):
+                    print(f" - {rel_path}")
         return
 
     upload_folder(
         repo_id=repo_name,
-        folder_path=".",
+        folder_path=os.path.join(os.path.dirname(__file__), "..", "hf"),
         repo_type="model",
         token=token,
-        allow_patterns=[
-            "model.safetensors",
-            "modeling_sproto.py",
-            "configuration_sproto.py",
-            "config.json",
-            "README.md",
-            "LICENSE",
-            "overview.png",
-        ],
+        allow_patterns=allow_patterns,
         commit_message="Upload sproto model",
     )
 

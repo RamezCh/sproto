@@ -5,14 +5,15 @@ import torch
 # Go up one directory from current file
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.dirname(current_dir)
+# Add parent_dir to find sproto and hf packages
 sys.path.insert(0, parent_dir)
 
 from sproto.model.multi_proto import MultiProtoModule
-from modeling_sproto import SprotoModel
-from configuration_sproto import SprotoConfig
+from hf.modeling_sproto import SprotoModel
+from hf.configuration_sproto import SprotoConfig
 from safetensors.torch import save_file
 
-ckpt_path = "ckpt-epoch=573.ckpt"
+ckpt_path = os.path.join(parent_dir, "resources", "ckpt-epoch=573.ckpt")
 
 # 1. Load Lightning model
 lightning_model = MultiProtoModule.load_from_checkpoint(
@@ -79,7 +80,7 @@ hf_model = SprotoModel(config)
 hf_model.module.load_state_dict(new_state_dict, strict=True)
 
 # 7. Save in HF format - CUSTOM IMPLEMENTATION
-save_directory = "output_dir"
+save_directory = os.path.join(parent_dir, "hf")
 os.makedirs(save_directory, exist_ok=True)
 
 # Save the config

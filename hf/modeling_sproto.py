@@ -1,6 +1,6 @@
 from transformers import PreTrainedModel
 from sproto.model.multi_proto import MultiProtoModule
-from configuration_sproto import SprotoConfig
+from .configuration_sproto import SprotoConfig
 
 class SprotoModel(PreTrainedModel):
     config_class = SprotoConfig
