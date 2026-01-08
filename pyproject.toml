@@ -23,6 +23,7 @@ fastapi = "^0.85.1"
 uvicorn = "^0.19.0"
 optuna = "^3.3.0"
 pytorch-lightning = "1.9"
+python-dotenv = "0.21.1"
 
 [tool.poetry.scripts]
 train = "scripts.training:start"
