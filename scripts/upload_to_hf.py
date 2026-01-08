@@ -30,11 +30,9 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
             "modeling_sproto.py",
             "configuration_sproto.py",
             "config.json",
-            "tokenizer_config.json",
-            "vocab.txt",
-            "merges.txt",
             "README.md",
             "LICENSE",
+            "overview.png",
         ],
         commit_message="Upload sproto model",
     )
