@@ -25,9 +25,14 @@ model_type: sproto
 
 This repository provides **S-Proto**, a sparse and interpretable prototypical network for extreme multi-label diagnosis prediction from clinical text. The model is designed to address the long-tail distribution of clinical diagnoses while preserving faithful, prototype-based explanations.
 
+## Interactive Demo
+
+You can explore the model's predictions and interpretability features through our interactive web demo:
+**[https://s-proto.demo.datexis.com/](https://s-proto.demo.datexis.com/)**
+
 S-Proto was introduced in the paper:
 
-**Boosting Long-Tail Data Classification with Sparse Prototypical Networks**  
+**[Boosting Long-Tail Data Classification with Sparse Prototypical Networks](https://link.springer.com/chapter/10.1007/978-3-031-70368-3_26)**
 Alexei Figueroa*, Jens-Michalis Papaioannou*, et al.  
 DATEXIS, Berliner Hochschule für Technik, Feinstein Institutes, TU Munich, Leibniz University Hannover  
 (* equal contribution)
