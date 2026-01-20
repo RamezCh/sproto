@@ -32,7 +32,7 @@ You can explore the model's predictions and interpretability features through ou
 
 S-Proto was introduced in the paper:
 
-**[Boosting Long-Tail Data Classification with Sparse Prototypical Networks](https://link.springer.com/chapter/10.1007/978-3-031-70368-3_26)**
+**[Boosting Long-Tail Data Classification with Sparse Prototypical Networks](https://ecmlpkdd-storage.s3.eu-central-1.amazonaws.com/preprints/2024/lncs14947/lncs14947435.pdf)**
 Alexei Figueroa*, Jens-Michalis Papaioannou*, et al.  
 DATEXIS, Berliner Hochschule für Technik, Feinstein Institutes, TU Munich, Leibniz University Hannover  
 (* equal contribution)
