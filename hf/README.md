@@ -2,21 +2,29 @@
 language: en
 license: apache-2.0
 library_name: transformers
+
 pipeline_tag: text-classification
-tags:
-  - clinical-nlp
-  - biomedical
-  - long-tail-learning
-  - interpretability
-  - prototypical-networks
-  - multi-label-classification
-datasets: mimic-iv
+task_categories:
+  - text-classification
+
+model_type: sproto
 base_model: microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext
+
+datasets:
+  - mimic-iv
+
 metrics:
   - auroc
   - pr-auc
-task_categories: text-classification
-model_type: sproto
+
+tags:
+  - text-classification
+  - multi-label-classification
+  - long-tail-learning
+  - clinical-nlp
+  - interpretability
+  - prototypical-networks
+  - ehr
 ---
 
 # S-Proto: Sparse Prototypical Networks for Long-Tail Clinical Diagnosis Prediction
