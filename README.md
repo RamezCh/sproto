@@ -67,7 +67,7 @@ Provided by Hugging Face and responsible for:
 When calling:
 
 ```python
-AutoModel.from_pretrained("datexis/sproto", trust_remote_code=True)
+AutoModel.from_pretrained("DATEXIS/sproto", trust_remote_code=True)
 ```
 
 Hugging Face performs the following steps:

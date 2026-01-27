@@ -21,6 +21,7 @@ tags:
   - text-classification
   - multi-label-classification
   - long-tail-learning
+  - medical
   - clinical-nlp
   - interpretability
   - prototypical-networks
@@ -98,7 +99,7 @@ tokenizer = AutoTokenizer.from_pretrained(
     "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext"
 )
 model = AutoModel.from_pretrained(
-    "datexis/sproto",
+    "DATEXIS/sproto",
     trust_remote_code=True
 )
 model.eval()
@@ -164,9 +165,28 @@ Qualitative evaluation with medical professionals confirms that learned prototyp
 
 ## Training
 
-Set up the environment with Poetry.
+First, clone the repository:
 
-Shell into the environment and execute:
+```bash
+git clone https://github.com/DATEXIS/sproto.git
+cd sproto
+```
+
+Set up the environment using Poetry:
+
+```bash
+poetry install
+```
+
+Activate the virtual environment:
+
+```bash
+poetry env activate
+```
+
+Once the environment is active, you can start training by running the train command with the desired arguments.
+
+Example:
 
 ```bash
 train \
@@ -217,6 +237,7 @@ train \
 This model and its associated code are released under the Apache License 2.0.
 
 The model was trained on the MIMIC-IV dataset, which is subject to restricted access. No training data is included or redistributed with this repository.
+The data were accessed under a data use agreement. No patient-identifiable information is shared.
 
 Use of this model must comply with all applicable data governance and ethical guidelines.
 
