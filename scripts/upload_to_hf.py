@@ -47,7 +47,7 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
         repo_type="model",
         token=token,
         allow_patterns=allow_patterns,
-        commit_message="Update Setup & ReadME",
+        commit_message="Update ReadME",
     )
 
 def main():

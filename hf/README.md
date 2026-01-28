@@ -30,6 +30,13 @@ tags:
 
 # S-Proto: Sparse Prototypical Networks for Long-Tail Clinical Diagnosis Prediction
 
+**Published at ECML PKDD 2024 (CORE A)**  
+*Boosting Long-Tail Data Classification with Sparse Prototypical Networks*
+
+Alexei Figueroa*, Jens-Michalis Papaioannou*, et al.  
+DATEXIS, Berliner Hochschule für Technik, Feinstein Institutes, TU Munich, Leibniz University Hannover  
+(* equal contribution)
+
 ![S-Proto](overview.png)
 
 This repository provides **S-Proto**, a sparse and interpretable prototypical network for extreme multi-label diagnosis prediction from clinical text. The model is designed to address the long-tail distribution of clinical diagnoses while preserving faithful, prototype-based explanations.
@@ -42,6 +49,7 @@ You can explore the model's predictions and interpretability features through ou
 S-Proto was introduced in the paper:
 
 **[Boosting Long-Tail Data Classification with Sparse Prototypical Networks](https://ecmlpkdd-storage.s3.eu-central-1.amazonaws.com/preprints/2024/lncs14947/lncs14947435.pdf)**
+European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases (ECML PKDD 2024, CORE A)  
 Alexei Figueroa*, Jens-Michalis Papaioannou*, et al.  
 DATEXIS, Berliner Hochschule für Technik, Feinstein Institutes, TU Munich, Leibniz University Hannover  
 (* equal contribution)
@@ -222,7 +230,7 @@ train \
 @inproceedings{figueroa2024sproto,
   title={Boosting Long-Tail Data Classification with Sparse Prototypical Networks},
   author={Figueroa, Alexei and Papaioannou, Jens-Michalis and Fallon, Conor and Bekiaridou, Alexandra and Bressem, Keno and Zanos, Stavros and Gers, Felix and Nejdl, Wolfgang and Löser, Alexander},
-  booktitle={Proceedings of the Conference on Empirical Methods in Natural Language Processing},
+  booktitle={Proceedings of the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases (ECML PKDD)},
   year={2024}
 }
 ```
