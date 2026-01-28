@@ -21,6 +21,10 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
         "configuration_sproto.py",
         "config.json",
         "model.safetensors",
+        "special_tokens_map.json",
+        "tokenizer.json",
+        "tokenizer_config.json",
+        "vocab.txt"
         "overview.png",
         "LICENSE",
         "README.md",
@@ -43,7 +47,7 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
         repo_type="model",
         token=token,
         allow_patterns=allow_patterns,
-        commit_message="Upload sproto model",
+        commit_message="Update Setup & ReadME",
     )
 
 def main():

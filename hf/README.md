@@ -95,13 +95,8 @@ This model is **not intended for direct clinical deployment** without external v
 from transformers import AutoTokenizer, AutoModel
 import torch
 
-tokenizer = AutoTokenizer.from_pretrained(
-    "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext"
-)
-model = AutoModel.from_pretrained(
-    "DATEXIS/sproto",
-    trust_remote_code=True
-)
+tokenizer = AutoTokenizer.from_pretrained("DATEXIS/sproto")
+model = AutoModel.from_pretrained("DATEXIS/sproto", trust_remote_code=True)
 model.eval()
 
 text_input = [

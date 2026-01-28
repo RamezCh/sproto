@@ -2,8 +2,10 @@ from transformers import AutoTokenizer, AutoModel
 import torch
 
 # 1. Load the model and tokenizer
-tokenizer = AutoTokenizer.from_pretrained("microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext")
+tokenizer = AutoTokenizer.from_pretrained("DATEXIS/sproto")
 model = AutoModel.from_pretrained("DATEXIS/sproto", trust_remote_code=True)
+#tokenizer = AutoTokenizer.from_pretrained("microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext")
+# model = AutoModel.from_pretrained("DATEXIS/sproto", trust_remote_code=True)
 model.eval()
 
 # 2. Sample Data
