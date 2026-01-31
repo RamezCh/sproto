@@ -155,6 +155,9 @@ The model returns a dictionary with the following entries:
 - **metadata**  
   Additional information useful for analysis and interpretability.
 
+
+![Output Example](output_example.png)
+
 ## Explainability
 
 S-Proto provides built-in faithful explanations through its prototypical structure:

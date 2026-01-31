@@ -26,6 +26,7 @@ def upload_model(repo_name: str, token: str, dry_run: bool = False):
         "tokenizer_config.json",
         "vocab.txt"
         "overview.png",
+        "output_example.png",
         "LICENSE",
         "README.md",
     ]
