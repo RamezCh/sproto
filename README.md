@@ -153,6 +153,14 @@ poetry run python scripts/plug_play_test.py
 
 The script first attempts to load from the local `hf/` directory and falls back to the Hugging Face Hub if not found.
 
+### Run Tests
+
+The test suite verifies both the core model logic and the Hugging Face wrapper compatibility. You can run the tests using `pytest`:
+
+```bash
+poetry run pytest
+```
+
 ## Notes
 
 - PyTorch Lightning checkpoints remain local and are never distributed
