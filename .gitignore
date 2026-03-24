@@ -1,0 +1,7 @@
+tests/__pycache__/
+sproto/sproto/metrics/__pycache__/
+sproto/sproto/model/__pycache__/
+sproto/sproto/utils/__pycache__/
+sproto/sproto/dataset/__pycache__/
+sproto/sproto/scripts/__pycache__/
+sproto/sproto/scripts/__pycache__/

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "vllm_m25": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Cluster LLM (vLLM) - M2.5",
+      "options": {
+        "baseURL": "http://llm-service-m25.bht-inference.svc.cluster.local:8000/v1",
+        "apiKey": "dummy"
+      },
+      "models": {
+        "QuantTrio/MiniMax-M2.5-AWQ": {
+          "name": "MiniMax M2.5 AWQ (Local)",
+          "limit": {
+            "context": 32768,
+            "output": 4096
+          }
+        }
+      }
+    }
+  },
+  "model": "vllm_m25/QuantTrio/MiniMax-M2.5-AWQ"
+}

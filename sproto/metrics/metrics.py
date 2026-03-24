@@ -6,7 +6,7 @@ import torch
 import torchmetrics
 from torchmetrics.classification.auroc import AUROC
 from torchmetrics.classification.precision_recall_curve import PrecisionRecallCurve
-from torchmetrics.functional.classification.auroc import _auroc_compute
+from torchmetrics.functional.classification import auroc
 from torchmetrics.metric import Metric
 from torchmetrics.utilities.data import dim_zero_cat
 
@@ -99,14 +99,13 @@ class FilteredAUROC(AUROC):
         logging.info(
             f"{num_filtered_cols} columns not considered for ROC AUC calculation!")
 
-        return _auroc_compute(
+        return auroc(
             filtered_preds,
             filtered_target,
-            self.mode,
-            self.num_classes - num_filtered_cols,
-            self.pos_label,
-            self.average,
-            self.max_fpr,
+            num_classes=self.num_classes - num_filtered_cols,
+            pos_label=self.pos_label,
+            average=self.average,
+            max_fpr=self.max_fpr,
         )
 
 
@@ -153,12 +152,11 @@ class FilteredAUROCPerBucket(AUROC):
         logging.info(
             f"{num_filtered_cols} columns not considered for ROC AUC calculation!")
 
-        return _auroc_compute(
+        return auroc(
             filtered_preds,
             filtered_target,
-            self.mode,
-            self.num_classes - num_filtered_cols,
-            self.pos_label,
-            self.average,
-            self.max_fpr,
+            num_classes=self.num_classes - num_filtered_cols,
+            pos_label=self.pos_label,
+            average=self.average,
+            max_fpr=self.max_fpr,
         )
