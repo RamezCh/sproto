@@ -45,10 +45,8 @@ def dummy_config(dummy_bert_path, temp_label_order_file):
         pretrained_model=dummy_bert_path,
         num_classes=3,
         label_order_path=temp_label_order_file,
-        use_cuda=False,
         reduce_hidden_size=None,
         num_prototypes_per_class=1,
-        eval_buckets=None,
     )
 
 
@@ -184,11 +182,13 @@ class TestSprotoConfig:
             pretrained_model="mypath",
             num_classes=10,
             label_order_path=temp_label_order_file,
-            lr_features=1e-5
+            use_sigmoid=True,
+            seed=42,
         )
         assert config.pretrained_model == "mypath"
         assert config.num_classes == 10
-        assert config.lr_features == 1e-5
+        assert config.use_sigmoid is True
+        assert config.seed == 42
 
 
 class TestSprotoModel:

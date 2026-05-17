@@ -1,16 +1,15 @@
 {
-  "cls_token": "[CLS]",
-  "do_basic_tokenize": true,
   "do_lower_case": true,
-  "mask_token": "[MASK]",
-  "model_max_length": 1000000000000000019884624838656,
-  "name_or_path": "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract-fulltext",
-  "never_split": null,
+  "tokenizer_class": "BertTokenizer",
   "pad_token": "[PAD]",
   "sep_token": "[SEP]",
-  "special_tokens_map_file": null,
-  "strip_accents": null,
-  "tokenize_chinese_chars": true,
-  "tokenizer_class": "BertTokenizer",
-  "unk_token": "[UNK]"
+  "cls_token": "[CLS]",
+  "mask_token": "[MASK]",
+  "unk_token": "[UNK]",
+  "pad_token_id": 0,
+  "sep_token_id": 102,
+  "cls_token_id": 101,
+  "mask_token_id": 103,
+  "unk_token_id": 100,
+  "model_max_length": 512
 }

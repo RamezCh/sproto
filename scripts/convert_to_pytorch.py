@@ -6,7 +6,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import torch
-from safetensors.torch import save_file
 
 from hf.configuration_sproto import SprotoConfig
 
@@ -87,9 +86,9 @@ def convert_checkpoint(checkpoint_path, output_dir):
     
     print(f"Mapped {len(mapped_state_dict)} keys")
     
-    safetensors_path = output_dir / "model.safetensors"
-    save_file(mapped_state_dict, str(safetensors_path))
-    print(f"Saved weights to {safetensors_path}")
+    pytorch_path = output_dir / "pytorch_model.bin"
+    torch.save(mapped_state_dict, str(pytorch_path))
+    print(f"Saved weights to {pytorch_path}")
     
     config_params = extract_config(hyper_parameters)
     config = SprotoConfig(**config_params)

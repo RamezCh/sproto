@@ -97,6 +97,25 @@ This model is intended for:
 
 This model is **not intended for direct clinical deployment** without external validation, auditing, and regulatory approval.
 
+## Requirements
+
+The model depends on the base `sproto` package (which contains `MultiProtoModule`) and specific versions of its dependencies. Version mismatches — especially in `torchmetrics` and `pytorch-lightning` — will cause `AttributeError` or import failures.
+
+```bash
+pip install torch>=1.12.1 \
+            transformers>=4.25.1 \
+            torchmetrics>=0.10.1 \
+            pytorch-lightning==1.9
+```
+
+| Package | Required version | Reason |
+|---------|-----------------|--------|
+| `torch` | `>= 1.12.1` | Minimum version for `nn.PairwiseDistance` and `torch.einsum` patterns used in the prototype layer |
+| `transformers` | `>= 4.25.1` | Minimum version with `trust_remote_code` + `auto_map` support for custom model loading |
+| `torchmetrics` | `>= 0.10.1` | `MultilabelAveragePrecision` was added in 0.10; older versions raise `AttributeError` on load |
+| `pytorch-lightning` | `== 1.9` | `MultiProtoModule` is a `pl.LightningModule`; the exact API (e.g. `validation_epoch_end`) changed in 2.x |
+| `sproto` | bundled | The `sproto/` package is included in this HF repo and downloaded automatically with `trust_remote_code=True` — no separate install needed |
+
 ## Inference Example
 
 ```python
@@ -142,6 +161,12 @@ print("Max indices:", max_indices)
 print("Metadata:", metadata)
 ```
 
+> **Note:** `tokens` (the list of token strings per sample) is **required** when `use_attention=True`
+> (which is the default). The attention mechanism uses the actual token strings to mask clinical
+> section headers (`[CLS]`, `[SEP]`, `"chief complaint :"`, etc.) before computing
+> token-to-prototype attention. Omitting `tokens` will raise a `ValueError`.
+> Obtain them with `tokenizer.convert_ids_to_tokens(input_ids[i])` as shown above.
+
 ## Outputs
 
 The model returns a dictionary with the following entries:
@@ -157,6 +182,15 @@ The model returns a dictionary with the following entries:
 
 
 ![Output Example](output_example.png)
+
+## Post-Processing & Label Thresholding
+
+S-Proto outputs predictions over **1,643 individual ICD-10 diagnosis classes**. To map the raw class indices back to actual diagnosis codes and filter out low-confidence predictions, you should use the `thresholds_per_label.json` file.
+
+Because S-Proto was trained on highly imbalanced, long-tail data, using a single global probability threshold (e.g., > 0.50) will miss rare diseases. Instead, the model uses **class-specific thresholds**. 
+
+**Important Thresholding Quirk:** 
+If a specific label has its threshold set to exactly `0.0` in the JSON file (which typically happens for extremely rare diseases with no validation positives), you should manually fall back to a reasonable default (e.g., `0.20`) during inference. If you strictly apply `probability > 0.0`, the neural network's sigmoid function will falsely trigger for every patient.
 
 ## Explainability
 

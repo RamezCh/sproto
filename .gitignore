@@ -5,6 +5,7 @@ __pycache__/
 resources/
 hf/config.json
 hf/model.safetensors
+hf/pytorch_model.bin
 # C extensions
 *.so
 # Distribution / packaging

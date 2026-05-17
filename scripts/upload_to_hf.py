@@ -1,71 +1,94 @@
-import os
 import argparse
-from huggingface_hub import HfApi, upload_folder
+import os
+from pathlib import Path
+
 from dotenv import load_dotenv
+from huggingface_hub import HfApi, create_repo
 
-# load .env from root directory (one folder up)
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
-def upload_model(repo_name: str, token: str, dry_run: bool = False):
-    api = HfApi()
-    if not dry_run:
-        api.create_repo(
-            repo_id=repo_name,
-            token=token,
-            private=True,
-            repo_type="model",
-            exist_ok=True,
-        )
-    allow_patterns = [
-        "modeling_sproto.py",
-        "configuration_sproto.py",
-        "config.json",
-        "model.safetensors",
-        "special_tokens_map.json",
-        "tokenizer.json",
-        "tokenizer_config.json",
-        "vocab.txt"
-        "overview.png",
-        "output_example.png",
-        "LICENSE",
-        "README.md",
-    ]
+HF_DIR = Path(__file__).parent.parent / "hf"
 
+
+def upload_to_hub(repo_id, hf_dir, dry_run=False):
+    load_dotenv()
+    token = os.getenv("HF_TOKEN")
+    
+    if not token:
+        raise ValueError("HF_TOKEN not found in .env file")
+    
+    api = HfApi(token=token)
+    root_dir = hf_dir.parent  # project root (one level above hf/)
+    sproto_dir = root_dir / "sproto"
+    
+    print(f"Repository: {repo_id}")
+    print(f"Uploading HF artifacts from: {hf_dir}")
+    print(f"Uploading sproto package from: {sproto_dir}")
+    
     if dry_run:
-        print("[DRY RUN] The following files would be uploaded:")
-        from fnmatch import fnmatch
-        folder_path = os.path.join(os.path.dirname(__file__), "..", "hf")
-        for root, dirs, files in os.walk(folder_path):
-            for file in files:
-                rel_path = os.path.relpath(os.path.join(root, file), folder_path)
-                if any(fnmatch(rel_path, pattern) for pattern in allow_patterns):
-                    print(f" - {rel_path}")
+        print("\n--- DRY RUN ---")
+        print("Files that would be uploaded from hf/:")
+        for file_path in hf_dir.rglob("*"):
+            if file_path.is_file() and "__pycache__" not in str(file_path):
+                print(f"  {file_path.relative_to(hf_dir)}")
+        print("Files that would be uploaded from sproto/ (as sproto/):")
+        for file_path in sproto_dir.rglob("*"):
+            if file_path.is_file() and "__pycache__" not in str(file_path):
+                print(f"  sproto/{file_path.relative_to(sproto_dir)}")
+        print("--- END DRY RUN ---\n")
         return
-
-    upload_folder(
-        repo_id=repo_name,
-        folder_path=os.path.join(os.path.dirname(__file__), "..", "hf"),
+    
+    create_repo(repo_id=repo_id, token=token, repo_type="model", exist_ok=True)
+    print(f"Created/verified repository: {repo_id}")
+    
+    # Upload hf/ folder (model weights, config, tokenizer, wrapper code)
+    api.upload_folder(
+        folder_path=str(hf_dir),
+        repo_id=repo_id,
         repo_type="model",
-        token=token,
-        allow_patterns=allow_patterns,
-        commit_message="Update ReadME",
+        ignore_patterns=["__pycache__/**", "*.pyc"],
     )
+    
+    # Upload sproto/ package so users don't need a separate install.
+    # HF caches trust_remote_code files under:
+    #   ~/.cache/huggingface/modules/transformers_modules/<repo_id>/
+    # Uploading sproto/ to repo root places it next to modeling_sproto.py
+    # in that cache directory, so `from sproto.model.multi_proto import ...` resolves.
+    api.upload_folder(
+        folder_path=str(sproto_dir),
+        repo_id=repo_id,
+        repo_type="model",
+        path_in_repo="sproto",
+        ignore_patterns=["__pycache__/**", "*.pyc"],
+    )
+    
+    print(f"\nSuccessfully uploaded to https://huggingface.co/{repo_id}")
+
+
 
 def main():
-    print("Uploading model to Hugging Face")
+    parser = argparse.ArgumentParser(description="Upload model to HuggingFace Hub")
+    parser.add_argument(
+        "--repo",
+        type=str,
+        required=True,
+        help="Target repository (e.g., username/repo-name)"
+    )
+    parser.add_argument(
+        "--hf-dir",
+        type=str,
+        default=str(HF_DIR),
+        help="Directory containing HuggingFace artifacts"
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Perform validation without uploading"
+    )
     
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--repo", required=True)
-    parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
+    
+    upload_to_hub(args.repo, Path(args.hf_dir), args.dry_run)
 
-    token = os.environ.get("HF_TOKEN")
-    if token is None:
-        raise RuntimeError("HF_TOKEN environment variable not set")
-
-    upload_model(repo_name=args.repo, token=token, dry_run=args.dry_run)
-
-    print("Model uploaded successfully")
 
 if __name__ == "__main__":
     main()
